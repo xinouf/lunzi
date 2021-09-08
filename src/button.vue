@@ -1,30 +1,36 @@
 <template>
-  <button class="g-button" :class="{[`icon-${iconPosition}`]: true}">
-    <icon v-if="icon" :name="icon"></icon>
-    <icon class="loading" name="loading"></icon>
+  <button class="g-button" :class="{[`icon-${iconPosition}`]: true}"
+  @click="$emit('click')">
+    <icon v-if="icon && !loading"  :name="icon"></icon>
+    <icon class="loading" v-if="loading" name="loading"></icon>
     <div class="content">
       <slot/>
     </div>
   </button>
 </template>
 <script>
-
-import Icon from "./icon";
+import Icon from './icon';
 export default {
+  components:{
+    'icon':Icon
+  },
   props: {
     icon:{},
+    loading:{
+      type:Boolean,
+      default: false,
+    },
     iconPosition: {
       type: String,
       default: 'left',
       validator(value) {
-        return value === 'right' || value === 'right'
+        return value === 'right' || value === 'left'
       }
     }
   },
-  components: {Icon}
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 @keyframes spin {
   0% {transform: rotate(0deg)}
   100%{transform: rotate(360deg)}

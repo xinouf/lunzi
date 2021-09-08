@@ -10,7 +10,7 @@ export default {
     name: {},
 }}
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .g-icon {
   width: 1.3em;
   height: 1.3em;
