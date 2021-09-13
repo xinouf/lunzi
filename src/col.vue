@@ -1,45 +1,163 @@
 <template>
-  <div class="col" :class="[`span && col-${span}`, offset && `offset-${offset}`]"
-  :style="{paddingLeft:gutter/2+'px',paddingRight:gutter/2+'px'}">
-    <div style="border:1px solid green; height: 100px">
+  <div class="col" :class="colClass" :style="colStyle">
     <slot></slot>
-    </div>
   </div>
 </template>
 <script>
+let validator = (value) => {
+  let keys = Object.keys(value)
+  let valid = true
+  keys.forEach(key => {
+    if (!['span', 'offset'].includes(key)) {
+      valid = false
+    }
+  })
+  return valid
+}
 export default {
-props: {
-  span: {
-    type: [Number,String]
+  props: {
+    span: {
+      type: [Number, String]
+    },
+    offset: {
+      type: [Number, String]
+    },
+    ipad: {
+      type: Object,
+      validator,
+    },
+    narrowPc: {
+      type: Object,
+      validator,
+    },
+    pc: {
+      type: Object,
+      validator,
+    },
+    widePc: {
+      type: Object,
+      validator,
+    },
   },
-  offset:{
-    type: [Number,String]
+  data() {
+    return {
+      gutter: 0,
+
+    }
   },
-},
-data() {
-  return {
-    gutter:0
+  methods:{
+    createClasses (obj, str = '') {
+      if (!obj) {
+        return []
+      }
+      let array = []
+      if (obj.span) {
+        array.push(`col-${str}${obj.span}`)
+      }
+      if (obj.offset) {
+        array.push(`offset-${str}${obj.offset}`)
+      }
+      return array
+    }
+  },
+  computed: {
+    colClass() {
+      let {span, offset, ipad, narrowPc, pc, widePc} = this
+     let createClasses = this.createClasses
+      return [
+        ...createClasses({span, offset}),
+        ...createClasses(ipad, 'ipad-'),
+        ...createClasses(narrowPc, 'narrow-'),
+        ...createClasses(pc, 'pc-'),
+        ...createClasses(widePc, 'wide-pc-'),
+      ]
+
+    },
+    colStyle() {
+      return {
+        paddingLeft: this.gutter / 2 + 'px', paddingRight: this.gutter / 2 + 'px'
+      }
+    }
   }
 }
-}
+
 </script>
 <style scoped lang="scss">
 .col {
-  height: 100px;
-  /*background: grey;*/
-  width: 50%;
-/*  border: 1px solid red;*/
-}
-$class: col-;
-@for $n from 1 through 24 {
-  &.#{$class}#{$n}{
-    width: ($n / 24) * 100%;
+  $class: col-;
+  @for $n from 1 through 24 {
+    &.#{$class}#{$n} {
+      width: ($n / 24) * 100%;
+    }
   }
- }
-$class: offset-;
-@for $n from 1 through 24 {
-  &.#{$class}#{$n}{
-    margin-left: ($n / 24) * 100%;
+
+  $class: offset-;
+  @for $n from 1 through 24 {
+    &.#{$class}#{$n} {
+      margin-left: ($n / 24) * 100%;
+    }
+  }
+
+  @media (min-width: 577px) {
+    $class: col-ipad-;
+    @for $n from 1 through 24 {
+      &.#{$class}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+
+    $class: offset-ipad-;
+    @for $n from 1 through 24 {
+      &.#{$class}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+  @media (min-width: 769px) {
+    $class: col-narrow-;
+    @for $n from 1 through 24 {
+      &.#{$class}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+
+    $class: offset-narrow-;
+    @for $n from 1 through 24 {
+      &.#{$class}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+  @media (min-width: 993px) {
+    $class: col-pc-;
+    @for $n from 1 through 24 {
+      &.#{$class}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+
+    $class: offset-pc-;
+    @for $n from 1 through 24 {
+      &.#{$class}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
+  }
+  @media (min-width: 1201px) {
+    $class: col-wide-pc-;
+    @for $n from 1 through 24 {
+      &.#{$class}#{$n} {
+        width: ($n / 24) * 100%;
+      }
+    }
+
+    $class: offset-wide-pc-;
+    @for $n from 1 through 24 {
+      &.#{$class}#{$n} {
+        margin-left: ($n / 24) * 100%;
+      }
+    }
   }
 }
+
 </style>

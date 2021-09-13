@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="zh-Hans">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>lunzi</title>
+    <title>Document</title>
     <style>
         * {
             margin: 0;
@@ -24,69 +24,23 @@
             --border-color-hover: #666;
         }
 
-        #app {
-            margin: 20px;
-        }
+         #app {
+             margin: 20px;
+         }
 
         body {
             font-size: var(--font-size);
         }
-    </style>
-    <style>
-        .box {
-            margin: 20px;
-        }
+
     </style>
 </head>
 <body>
 <div id="app">
-    <g-row gutter="10">
-        <g-col></g-col>
-        <g-col></g-col>
-    </g-row>
-    <g-row>
-        <g-col></g-col>
-        <g-col></g-col>
-        <g-col></g-col>
-        <g-col></g-col>
-    </g-row>
-    <g-row>
-        <g-col span="2"></g-col>
-        <g-col span="22"></g-col>
-    </g-row>
-    <g-row>
-        <g-col span="2"></g-col>
-        <g-col span="20" offset="2"></g-col>
-    </g-row>
-    <div class="box">
-        <g-input value="张十点多" disabled></g-input>
-        <g-input value="不能修改" readonly></g-input>
-        <g-input value="可修改"></g-input>
-    </div>
-    <div class="box">
-        <g-input value="李四" error="姓名不能少于2个字"></g-input>
-        <g-input value="传参" @change="inputChange"></g-input>
-
-    </div>
-    <div class="box">
-        <g-button :loading="loading1" @click="loading1=!loading1">
-            按钮
-        </g-button>
-        <g-button :loading="loading2" icon="setting" @click="loading2=!loading2">
-            按钮
-        </g-button>
-        <g-button :loading="loading3" icon="setting" icon-position="right" @click="loading3=!loading3">
-            按钮
-        </g-button>
-        <g-button-group>
-            <g-button icon="left">上一页</g-button>
-            <g-button>更多</g-button>
-            <g-button icon="right" icon-position="right">下一页</g-button>
-        </g-button-group>
-    </div>
-
+<button @click="showToast1">点击top</button>
+    <button @click="showToast2">点击middle</button>
+    <button @click="showToast3">点击bottom</button>
 </div>
-<script src="src/app.js"></script>
-<script src="./src/svg.js"></script>
+<script src="./src/app.js">
+</script>
 </body>
 </html>
