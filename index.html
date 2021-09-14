@@ -32,21 +32,82 @@
 </head>
 <body>
 <div id="app">
-<g-popover style="padding-top: 100px;padding-left: 100px">
-    <template #content>
-        <div>我是内容</div>
-    </template>
-    <template>
-<button>点开</button>
-    </template>
-</g-popover>
+    <div style="margin-top: 100px;margin-left: 100px">
+        <g-popover style="margin-left: 10px">
+            <template #content>
+                <div>我是内容1</div>
+            </template>
+            <template>
+                <g-button>点(上)</g-button>
+            </template>
+        </g-popover>
+        <g-popover position="bottom" style="margin-left: 100px">
+            <template #content>
+                <div>我是内容2</div>
+            </template>
+            <template>
+                <g-button>点(下)</g-button>
+            </template>
+        </g-popover>
+        <g-popover position="left" style="margin-left: 100px">
+            <template #content>
+                <div>我是内容3</div>
+            </template>
+            <template>
+                <g-button>点(左)</g-button>
+            </template>
+        </g-popover>
+        <g-popover position="right" style="margin-left: 100px">
+            <template #content>
+                <div>我是内容4</div>
+            </template>
+            <template>
+                <g-button>点(右)</g-button>
+            </template>
+        </g-popover>
+    </div>
+    <div style="margin-top: 100px;margin-left: 100px">
+        <g-popover style="margin-left: 10px" trigger="hover">
+            <template #content>
+                <div>我是内容1</div>
+            </template>
+            <template>
+                <g-button>放(上)</g-button>
+            </template>
+        </g-popover>
+        <g-popover position="bottom" style="margin-left: 100px" trigger="hover">
+            <template #content>
+                <div>我是内容2</div>
+            </template>
+            <template>
+                <g-button>放(下)</g-button>
+            </template>
+        </g-popover>
+        <g-popover position="left" style="margin-left: 100px" trigger="hover">
+            <template #content>
+                <div>我是内容3</div>
+            </template>
+            <template>
+                <g-button>放(左)</g-button>
+            </template>
+        </g-popover>
+        <g-popover position="right" style="margin-left: 100px" trigger="hover">
+            <template #content>
+                <div>我是内容4</div>
+            </template>
+            <template>
+                <g-button>放(右)</g-button>
+            </template>
+        </g-popover>
+    </div>
 </div>
 <script src="./src/app.js">
-    </script>
+</script>
 </body>
 </html>
 <script>
     import Button from "./src/button";
+
     export default {
         components: {Button}
     }

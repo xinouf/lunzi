@@ -1,9 +1,11 @@
 <template>
-  <div class="popover" @click="onClick" ref="popover">
-    <div ref="contentWrapper" class="content-wrapper" v-show="visible">
+  <div class="popover"  ref="popover">
+    <div ref="contentWrapper" class="content-wrapper" v-if="visible"
+         :class="{[`position-${position}`]:true}"
+    >
       <slot name="content"></slot>
     </div>
-    <span ref="triggerWrapper">
+    <span ref="triggerWrapper" style="display: inline-block">
     <slot></slot>
   </span>
   </div>
@@ -13,36 +15,114 @@
 export default {
   name: 'GuluPopover',
   data() {
-    return {visible: false}
+    return {
+      visible: false,
+    }
+  },
+  mounted() {
+    if (this.trigger === 'click') {
+      this.$refs.popover.addEventListener('click', this.onClick)
+    } else {
+      this.$refs.popover.addEventListener('mouseenter', this.open)
+      this.$refs.popover.addEventListener('mouseleave', this.close)
+    }
+   /* this.$refs.popover.addEventListener(this.openEvent,()=>{this.open()})
+    this.$refs.popover.addEventListener(this.closeEvent,()=>{this.close()})*/
+  },
+  destroy(){
+    if (this.trigger === 'click') {
+      this.$refs.popover.removeEventListener('click', this.onClick)
+    } else {
+      this.$refs.popover.removeEventListener('mouseenter', this.open)
+      this.$refs.popover.removeEventListener('mouseleave', this.close)
+    }
+  },
+  computed:{
+    openEvent(){
+      if(this.trigger === 'click'){
+        return'click'
+      }else {
+        return 'mouseenter'
+      }
+    },
+    closeEvent(){
+      if(this.trigger === 'click'){
+        return'click'
+      }else {
+        return 'mouseleave'
+      }
+    },
+  },
+  props: {
+    position: {
+      type: String,
+      default: 'top',
+      validator(value) {
+        return ['top', 'bottom', 'left', 'right'].indexOf(value) >= 0;
+      }
+    },
+    trigger:{
+      type: String,
+      default: 'click',
+      validator(value) {
+        return ['hover', 'click'].indexOf(value) >= 0;
+      }
+    }
   },
   methods: {
     positionContent() {
-      document.body.appendChild(this.$refs.contentWrapper)
-      let {width, height, top, left} = this.$refs.triggerWrapper.getBoundingClientRect()
-      this.$refs.contentWrapper.style.left = left + window.scrollX + 'px'
-      this.$refs.contentWrapper.style.top = top + window.scrollY + 'px'
+      const {triggerWrapper, contentWrapper} = this.$refs
+      document.body.appendChild(contentWrapper)
+      const {width, height, top, left} = triggerWrapper.getBoundingClientRect()
+      const {height: height2} = contentWrapper.getBoundingClientRect()
+      let positions= {
+        top:{
+          top:top + window.scrollY,
+          left:left + window.scrollX,
+        },
+        bottom:{
+          top:top + height + window.scrollY,
+          left:left + window.scrollX,
+        },
+        left:{
+          top:top + Math.abs(height - height2) / 2 + window.scrollY,
+          left:left + window.scrollX,
+        },
+        right:{
+          top:top + Math.abs(height - height2) / 2 + window.scrollY,
+          left:left + window.scrollX+ width,
+        },
+      }
+      contentWrapper.style.top=positions[this.position].top+'px'
+      contentWrapper.style.left=positions[this.position].left+'px'
     },
     onClickDocument(e) {
-      if (this.$refs.popover && (this.$refs.popover===e.target || this.$refs.popover.contains(e.target))){return}
-      this.close()},
+      if (this.$refs.popover && (this.$refs.popover === e.target || this.$refs.popover.contains(e.target))) {
+        return
+      }
+      if (this.$refs.contentWrapper && (this.$refs.contentWrapper === e.target || this.$refs.contentWrapper.contains(e.target))) {
+        return
+      }
+      this.close()
+    },
 
     open() {
-      this.visible =true
-      this.$nextTick(()=>{
+      this.visible = true
+      this.$nextTick(() => {
         this.positionContent()
         document.addEventListener('click', this.onClickDocument)
 
       })
     },
-    close(){
-      this.visible =!this.visible
+    close() {
+      this.visible = !this.visible
       document.removeEventListener('click', this.onClickDocument)
     },
     onClick(event) {
-      if(this.$refs.triggerWrapper.contains(event.target)){
-        if(this.visible === true){
+      if (this.$refs.triggerWrapper.contains(event.target)) {
+        if (this.visible === true) {
           this.close()
-        }else{
+        } else {
           this.open()
         }
       }
@@ -59,7 +139,87 @@ export default {
 
 .content-wrapper {
   position: absolute;
-  border: 1px solid red;
-  transform: translateY(-100%);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: .3em .8em;
+  max-width: 20em;
+  word-break: break-all;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));
+  background: white;
+
+  &::before, &::after {
+    content: '';
+    display: block;
+    border: 6px solid transparent;
+    width: 0;
+    height: 0;
+    position: absolute;
+    /*left: 8px;*/
+  }
+
+  &.position-top {
+    transform: translateY(-100%);
+    margin-top: -10px;
+
+    &::before {
+      border-top-color: #ccc;
+      top: 100%;
+    }
+
+    &::after {
+      border-top-color: white;
+      top: calc(100% - 1px);
+    }
+  }
+
+  &.position-bottom {
+    margin-top: 10px;
+
+    &::before {
+      border-bottom-color: #ccc;
+      bottom: 100%;
+    }
+
+    &::after {
+      border-bottom-color: white;
+      bottom: calc(100% - 1px);
+    }
+  }
+
+  &.position-left {
+    transform: translateX(-100%);
+    margin-left: -10px;
+
+    &::before, &::after {
+      left: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &::before {
+      border-left-color: #ccc;
+    }
+
+    &::after {
+      border-left-color: white;
+      left: calc(100% - .5px);
+    }
+  }
+
+  &.position-right {
+    margin-left: 10px;
+    &::before, &::after {
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    &::before {
+      border-right-color: #ccc;
+      right: 100%;
+    }
+    &::after {
+      border-right-color: white;
+      right: calc(100% - .8px);
+    }
+  }
 }
 </style>
