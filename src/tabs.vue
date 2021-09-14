@@ -31,7 +31,15 @@ export default {
       eventBus:this.eventBus
     }
   },
+  methods:{
+    checkChildren (){
+      if(this.$children.length === 0){
+        console && console.warn && console.warn('tab的子组件应该是tabs-head和tabs-nav,但你没写子组件')
+      }
+    }
+  },
   mounted() {//初始选择
+    this.checkChildren()
     this.$children.forEach((vm)=>{
       if(vm.$options.name ==='GuluTabsHead'){
         vm.$children.forEach((childVm)=>{
