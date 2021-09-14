@@ -24,9 +24,9 @@
             --border-color-hover: #666;
         }
 
-         #app {
-             margin: 20px;
-         }
+     /*   #app {
+            margin: 20px;
+        }*/
 
         body {
             font-size: var(--font-size);
@@ -36,11 +36,40 @@
 </head>
 <body>
 <div id="app">
-<button @click="showToast1">点击top</button>
-    <button @click="showToast2">点击middle</button>
-    <button @click="showToast3">点击bottom</button>
-</div>
-<script src="./src/app.js">
-</script>
+    <g-tabs :selected.sync="selectedTab">
+        <g-tabs-head>
+            <g-tabs-item name="woman">
+                美女
+            </g-tabs-item>
+            <g-tabs-item name="finance" disabled>
+                财经
+            </g-tabs-item>
+            <g-tabs-item name="sports">
+                体育
+            </g-tabs-item>
+            <template #actions>
+                <button name="setting">
+                    设置
+                </button>
+            </template>
+        </g-tabs-head>
+        <g-tabs-body>
+            <g-tabs-pane name="woman">
+                美女 相关资讯
+            </g-tabs-pane>
+            <g-tabs-pane name="finance">
+                财经 相关资讯
+            </g-tabs-pane>
+            <g-tabs-pane name="sports">
+                体育 相关资讯
+            </g-tabs-pane>
+        </g-tabs-body>
+    </g-tabs></div>
+    <!--<button @click="showToast1">点击top</button>
+        <button @click="showToast2">点击middle</button>
+        <button @click="showToast3">点击bottom</button>
+    </div>-->
+    <script src="./src/app.js">
+    </script>
 </body>
 </html>
