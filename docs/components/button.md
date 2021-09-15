@@ -6,5 +6,5 @@ sidebarDepth: 2
 
 使用方法
 <ClientOnly>
-<button-demo-1></button-demo-1>
+<button-demo></button-demo>
 </ClientOnly>
