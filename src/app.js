@@ -1,7 +1,7 @@
 import Vue from 'vue';
-import Button from './button'
+import Button from './button/button'
 import Icon from "./icon";
-import ButtonGroup from "./button-group";
+import ButtonGroup from "./button/button-group";
 import Input from "./input"
 import Row from "./row"
 import Col from "./col"
@@ -18,6 +18,8 @@ import TabsBody from "./tabs-body"
 import TabsItem from "./tabs-item"
 import TabsPane from "./tabs-pane"
 import Popover from "./popover"
+import Collapse from "./collapse"
+import CollapseItem from "./collapse-item"
 
 Vue.component('g-button', Button)
 Vue.component('icon', Icon)
@@ -37,6 +39,8 @@ Vue.component('g-tabs-body', TabsBody)
 Vue.component('g-tabs-item', TabsItem)
 Vue.component('g-tabs-pane', TabsPane)
 Vue.component('g-popover', Popover)
+Vue.component('g-collapse', Collapse)
+Vue.component('g-collapse-item', CollapseItem)
 
 Vue.use(plugin)
 
@@ -48,7 +52,7 @@ new Vue({
        /* loading1: false,
         loading2: false,
         loading3: false,*/
-        selectedTab:'sports'
+        selectedTab:['2']
     },
 
    /* methods: {

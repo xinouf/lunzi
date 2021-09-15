@@ -7,7 +7,7 @@
   </transition>
 </template>
 <script>
-import Button from "./button";
+import Button from "./button/button";
 export default {
   name:'GuluSider',
   components: {Button},
