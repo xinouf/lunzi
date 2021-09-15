@@ -141,7 +141,7 @@ export default {
   position: absolute;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: .3em .8em;
+  padding: .2em .7em;
   max-width: 20em;
   word-break: break-all;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.2));

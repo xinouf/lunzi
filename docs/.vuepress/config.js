@@ -14,7 +14,16 @@ module.exports = {
             '/get-started/',
             {
                 title:"组件",
-                children:['/components/button']
+                children:['/components/button',
+                    '/components/collapse',
+                    '/components/tabs',
+                    '/components/popover',
+                    '/components/grid',
+                    '/components/layout',
+                    '/components/toast',
+                    '/components/input',
+                 ],
+
             },
 
         ]

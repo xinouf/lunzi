@@ -2,7 +2,10 @@
   <div class="wrapper" :class="{error}">
     <!--    如果error存在就存在error类-->
     <input type="text" :value="value" :disabled="disabled" :readonly="readonly"
-    @change="$emit('change',$event)">
+           @change="$emit('change', $event.target.value)"
+           @input="$emit('input', $event.target.value)"
+           @focus="$emit('focus', $event.target.value)"
+           @blur="$emit('blur', $event.target.value)">
     <template v-if="error">
       <icon name="error" class="icon-error"></icon>
       <span class="errorMessage">{{ error }}</span>
@@ -32,14 +35,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-/*--button-height: 32px;
---font-size: 14px;
---button-bg: white;
---button-active-bg: #eee;
---border-radius: 4px;
---color: #333;
---border-color: #999;
---border-color-hover: #666;*/
+
 $height: 32px;
 $border-color: #999;
 $border-color-hover: #666;
@@ -53,8 +49,15 @@ $red: #F1453D;
   justify-content: center;
   align-items: center;
   vertical-align: middle;
->* {margin-right: .5em;
-&:last-child{margin-right: 0}}
+
+  > * {
+    margin-right: .5em;
+
+    &:last-child {
+      margin-right: 0
+    }
+  }
+
   > input {
     height: 32px;
     border: 1px solid $border-color;

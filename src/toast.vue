@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" :class="toastClasses">
+  <div class="gulu-toast" :class="toastClasses">
     <div class="toast" ref="toast">
       <div class="message">
         <slot v-if="!enableHtml"></slot>
@@ -28,7 +28,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          text: '关闭s',
+          text: '关闭',
           callback: (toast) => {
             toast.close()
           }
@@ -54,7 +54,6 @@ export default {
   },
   computed: {
     toastClasses() {
-      console.log('toastClasses')
       return {[`position-${this.position}`]: true}
     }
   },
@@ -107,7 +106,7 @@ $toast-bg: rgba(0, 0, 0, 0.75);
   0%{opacity: 0;}
   100%{opacity: 1;}
 }
-.wrapper {
+.gulu-toast {/*单个字母就不行了*/
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
@@ -151,6 +150,7 @@ $toast-bg: rgba(0, 0, 0, 0.75);
   .close {
     padding-left: 16px;
     flex-shrink: 0;
+    cursor: pointer;
   }
 
   .line {
